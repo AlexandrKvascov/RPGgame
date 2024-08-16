@@ -1,0 +1,182 @@
+[
+    {
+        "id": 1,
+        "type": "Ogre",
+        "lvl": 4,
+        "health": 60,
+        "strength": 30,
+        "dead": false,
+        "location": "Dark Forest"
+    },
+    {
+        "id": 2,
+        "type": "Goblin",
+        "lvl": 2,
+        "health": 25,
+        "strength": 10,
+        "dead": false,
+        "location": "Cave System"
+    },
+    {
+        "id": 3,
+        "type": "Troll",
+        "lvl": 8,
+        "health": 95,
+        "strength": 45,
+        "dead": false,
+        "location": "Mountain Peak"
+    },
+    {
+        "id": 4,
+        "type": "Skeleton",
+        "lvl": 1,
+        "health": 20,
+        "strength": 5,
+        "dead": false,
+        "location": "Haunted Mansion"
+    },
+    {
+        "id": 5,
+        "type": "Zombie",
+        "lvl": 3,
+        "health": 45,
+        "strength": 20,
+        "dead": false,
+        "location": "Abandoned Village"
+    },
+    {
+        "id": 6,
+        "type": "Dragon",
+        "lvl": 10,
+        "health": 100,
+        "strength": 50,
+        "dead": false,
+        "location": "Dragon s Lair"
+    },
+    {
+        "id": 7,
+        "type": "Werewolf",
+        "lvl": 6,
+        "health": 75,
+        "strength": 40,
+        "dead": false,
+        "location": "Moonlit Glade"
+    },
+    {
+        "id": 8,
+        "type": "Vampire",
+        "lvl": 9,
+        "health": 90,
+        "strength": 45,
+        "dead": false,
+        "location": "Crypt of the Ancients"
+    },
+    {
+        "id": 9,
+        "type": "Giant Spider",
+        "lvl": 5,
+        "health": 65,
+        "strength": 35,
+        "dead": false,
+        "location": "Dark Forest"
+    },
+    {
+        "id": 10,
+        "type": "Minotaur",
+        "lvl": 7,
+        "health": 85,
+        "strength": 40,
+        "dead": false,
+        "location": "Labyrinth of Minos"
+    },
+    {
+        "id": 11,
+        "type": "Ogre",
+        "lvl": 3,
+        "health": 50,
+        "strength": 25,
+        "dead": false,
+        "location": "Swamp of Sorrows"
+    },
+    {
+        "id": 12,
+        "type": "Goblin",
+        "lvl": 1,
+        "health": 15,
+        "strength": 5,
+        "dead": false,
+        "location": "Cave System"
+    },
+    {
+        "id": 13,
+        "type": "Troll",
+        "lvl": 9,
+        "health": 98,
+        "strength": 48,
+        "dead": false,
+        "location": "Mountain Peak"
+    },
+    {
+        "id": 14,
+        "type": "Skeleton",
+        "lvl": 4,
+        "health": 40,
+        "strength": 20,
+        "dead": false,
+        "location": "Haunted Mansion"
+    },
+    {
+        "id": 15,
+        "type": "Zombie",
+        "lvl": 2,
+        "health": 30,
+        "strength": 15,
+        "dead": false,
+        "location": "Abandoned Village"
+    },
+    {
+        "id": 16,
+        "type": "Werewolf",
+        "lvl": 8,
+        "health": 90,
+        "strength": 45,
+        "dead": false,
+        "location": "Moonlit Glade"
+    },
+    {
+        "id": 17,
+        "type": "Vampire",
+        "lvl": 6,
+        "health": 80,
+        "strength": 40,
+        "dead": false,
+        "location": "Crypt of the Ancients"
+    },
+    {
+        "id": 18,
+        "type": "Giant Spider",
+        "lvl": 4,
+        "health": 55,
+        "strength": 30,
+        "dead": false,
+        "location": "Dark Forest"
+    },
+    {
+        "id": 19,
+        "type": "Minotaur",
+        "lvl": 5,
+        "health": 70,
+        "strength": 35,
+        "dead": false,
+        "location": "Labyrinth of Minos"
+    },
+    {
+        "id": 20,
+        "type": "Dragon",
+        "lvl": 7,
+        "health": 95,
+        "strength": 48,
+        "dead": false,
+        "location": "Dragon s Lair"
+    }
+]
