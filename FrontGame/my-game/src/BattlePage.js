@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setStartBattle } from "./api.js";
+import { EnemyPunch, PlayerPunch } from "./AnimationPuch.js";
 
 const BattlePage = () => {
   const location = useLocation();
@@ -9,29 +10,33 @@ const BattlePage = () => {
   const [enemyHp, setEnemyHp] = useState(location.state.enemyHp);
   const [damage, setDamage] = useState(location.state.damage);
   const [enemyDamage, setEnemyDamage] = useState(location.state.enemyDamge);
+  const [showPlayerPunch, setShowPlayerPunch] = useState(false);
+  const [showEnemyPunch, setShowEnemyPunch] = useState(false);
 
   const startBattle = async () => {
     const response = await setStartBattle("battle");
-   
-    const battleResult = response
-    console.log(battleResult)
-    let Myhp = hp
-    let enemyhp = enemyHp
+    const battleResult = response;
+    console.log(battleResult);
+    let Myhp = hp;
+    let enemyhp = enemyHp;
+
     if (battleResult > 10) {
-        enemyhp = enemyHp-damage
+      enemyhp = enemyHp - damage;
+      setShowPlayerPunch(true);
+      setTimeout(() => setShowPlayerPunch(false), 1000);
       setEnemyHp(enemyHp - damage);
     } else {
-         Myhp = hp-enemyDamage
-      setHp(hp-enemyDamage);
+      Myhp = hp - enemyDamage;
+      setShowEnemyPunch(true);
+      setTimeout(() => setShowEnemyPunch(false), 1000);
+      setHp(hp - enemyDamage);
     }
-   
-    console.log(Myhp)
+
+    console.log(Myhp);
     if (enemyhp <= 0) {
-        await setStartBattle("win");
-        
+      await setStartBattle("win");
     } else if (Myhp <= 0) {
       await setStartBattle("lose");
- 
     }
   };
 
@@ -41,6 +46,8 @@ const BattlePage = () => {
       <p>Player HP: {hp}</p>
       <p>Enemy HP: {enemyHp}</p>
       <p>Battle State: </p>
+      {showPlayerPunch && <PlayerPunch />}
+      {showEnemyPunch && <EnemyPunch />}
       {hp <= 0 || enemyHp <= 0 ? (
         <button onClick={() => navigate("/game", { replace: true })}>
           Назад
