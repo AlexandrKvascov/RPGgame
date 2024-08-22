@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { setStartBattle } from "./api.js";
+import { SetExp, setStartBattle } from "./api.js";
 import { EnemyPunch, PlayerPunch } from "./AnimationPuch.js";
 
 const BattlePage = () => {
@@ -16,7 +16,7 @@ const BattlePage = () => {
   const startBattle = async () => {
     const response = await setStartBattle("battle");
     const battleResult = response;
-    console.log(battleResult);
+ 
     let Myhp = hp;
     let enemyhp = enemyHp;
 
@@ -32,9 +32,12 @@ const BattlePage = () => {
       setHp(hp - enemyDamage);
     }
 
-    console.log(Myhp);
+
     if (enemyhp <= 0) {
       await setStartBattle("win");
+      console.log(location.state.exp)
+      const lvl = await SetExp(location.state.EnemyId, location.state.MeId, location.state.exp)
+      localStorage.getItem("direction", JSON.stringify(lvl))
     } else if (Myhp <= 0) {
       await setStartBattle("lose");
     }

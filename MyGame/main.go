@@ -3,10 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 	"strconv"
 
 	// "strconv"
-
+	"io"
 	"math/rand"
 	"net/http"
 
@@ -92,11 +93,12 @@ func main() {
 		fmt.Println("NPC collection  found", answ)
 
 	}
-
+	go g.initPlayer(collection)
 	go g.HandleInputName(collection, redClient)
 	go g.HandleMove(collection, redClient)
 	go g.Handlefight(npcCollect)
 	go g.HandleBattle(collection)
+	go g.newLvlPlayer(collection, npcCollect)
 
 	fmt.Println("Сервер запущен на порту 8080")
 	err = http.ListenAndServe(":8080", corsMiddleware(http.DefaultServeMux))
@@ -117,19 +119,13 @@ func (g *myGame) HandleInputName(collection *mongo.Collection, redClient *redis.
 			Strenght: 10,
 			Lvl:      1,
 			Hp:       3,
+			Exp:      0,
 		}
 		_, err := collection.InsertOne(context.Background(), player)
 
 		if err != nil {
 			panic(err)
 		}
-		err = redClient.HMSet(context.Background(), "player:"+strconv.Itoa(player.Id), map[string]interface{}{
-			"name":     player.Name,
-			"health":   player.Health,
-			"strenght": player.Strenght,
-			"lvl":      player.Lvl,
-			"hp":       player.Hp,
-		}).Err()
 		g.config.Player.Id = player.Id
 		g.config.Player.Name = player.Name
 		g.config.Player.Health = player.Health
@@ -138,7 +134,7 @@ func (g *myGame) HandleInputName(collection *mongo.Collection, redClient *redis.
 		g.config.Player.Hp = player.Hp
 		fmt.Println(g.config.Player)
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(g.config.Player)
+		json.NewEncoder(w).Encode(g.config.Player.Id)
 	})
 }
 func (g *myGame) HandleMove(collection *mongo.Collection, redClient *redis.Client) {
@@ -214,7 +210,7 @@ func (g *myGame) HandleBattle(collection *mongo.Collection) {
 }
 
 func RandInt() int {
-	return rand.Intn(50) + 1
+	return rand.Intn(500) + 1
 }
 
 func (g *myGame) newId(collection *mongo.Collection) int {
@@ -223,20 +219,120 @@ func (g *myGame) newId(collection *mongo.Collection) int {
 	if err != nil {
 		panic(err)
 	}
+	filePath := "./migrations/IDcash.txt"
+	f, err := os.Open(filePath)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
 
+	var id int
+	_, err = fmt.Fscan(f, &id)
+	if err != nil && err != io.EOF {
+		panic(err)
+	}
+	if id != 0 {
+		NUM = id
+	}
 	var plr []player.Player
 	err = okey.All(context.Background(), &plr)
 	if err != nil {
 		panic(err)
 	}
-	for range plr {
-		if len(plr) > 0 {
-			lastElement := plr[len(plr)-1]
-
-			NUM = lastElement.Id + 1
-		}
-
+	if len(plr) > 0 {
+		lastElement := plr[len(plr)-1]
+		NUM = lastElement.Id + 1
 	}
+
+	// Write new ID back to file
+	f, err = os.Create(filePath)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+	fmt.Fprintf(f, "%d", NUM)
 	return NUM
 
+}
+func (g *myGame) newLvlPlayer(collection, npcCollect *mongo.Collection) {
+	http.HandleFunc("/newLvl", func(w http.ResponseWriter, r *http.Request) {
+
+		var data struct {
+			EnemyId   int `json:"EnemyId"`
+			ExpNewLvl int `json:"ExpNewLvl"`
+			MeExp     int `json:"MeExp"`
+		}
+
+		err := json.NewDecoder(r.Body).Decode(&data)
+		if err != nil {
+			fmt.Println(err)
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		var NpcStatus battle.Npc
+		var PlayerStatus player.Player
+		filter := bson.M{"id": data.EnemyId}
+
+		err = npcCollect.FindOne(context.Background(), filter).Decode(&NpcStatus)
+		if err != nil {
+			fmt.Println(err)
+		}
+		filter = bson.M{"id": data.ExpNewLvl}
+
+		collection.FindOne(context.Background(), filter).Decode(&PlayerStatus)
+
+		Exp := (NpcStatus.Lvl*NpcStatus.Strength)/(PlayerStatus.Lvl+1) + data.MeExp
+		fmt.Println(data.MeExp, "data")
+		fmt.Println(Exp, "new exp")
+		if Exp >= 100 {
+			lvlNew := PlayerStatus.Lvl + (Exp / 100)
+			Exp = Exp % 100
+			filter = bson.M{"id": data.ExpNewLvl}
+			update := bson.M{"$set": bson.M{"exp": Exp, "lvl": lvlNew, "strenght": PlayerStatus.Strenght + 10, "health": PlayerStatus.Health + 10}}
+			fmt.Println("Exp: ", Exp, "Lvl: ", lvlNew)
+			_, err := collection.UpdateOne(context.Background(), filter, update)
+			if err != nil {
+				fmt.Println(err)
+			}
+		} else {
+			filter = bson.M{"id": data.ExpNewLvl}
+			update := bson.M{"$set": bson.M{"exp": Exp}}
+			_, err := collection.UpdateOne(context.Background(), filter, update)
+			if err != nil {
+				fmt.Println(err)
+			}
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode("win")
+	})
+
+}
+func (g *myGame) initPlayer(collection *mongo.Collection) {
+	http.HandleFunc("/initPlayer", func(w http.ResponseWriter, r *http.Request) {
+		filePath := "./migrations/IDcash.txt"
+		f, err := os.Open(filePath)
+		if err != nil {
+			panic(err)
+		}
+		defer f.Close()
+
+		var id int
+		_, err = fmt.Fscan(f, &id)
+		if err != nil && err != io.EOF {
+			panic(err)
+		}
+		if id != 0 {
+			NUM = id
+		}
+		var PlayerStatus player.Player
+		filter := bson.M{"id": NUM}
+		err = collection.FindOne(context.Background(), filter).Decode(&PlayerStatus)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(PlayerStatus)
+	})
 }

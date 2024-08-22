@@ -2,14 +2,26 @@
 import React, { useState, useEffect } from 'react';
 import ButtonMove from './ButtonMove';
 import { useNavigate } from 'react-router-dom';
+import { initPlayer } from './api';
 
 const GamePage = () => {
-  const player = JSON.parse(localStorage.getItem('player'));
-  console.log(player)
+
+ 
+
+  const [playerUpdate, setPlayerUpdate] = useState()
   const [location, setLocation] = useState(null);
   const npc = JSON.parse(localStorage.getItem('npc'));
   const [isInCombat, setIsInCombat] = useState(false);
   const navigate = useNavigate();
+  useEffect(() =>{
+    async function loadPlayers() {
+    const playerUpdate = await initPlayer();
+    console.log(playerUpdate)
+    setPlayerUpdate(playerUpdate);
+    localStorage.setItem('player', JSON.stringify(playerUpdate));
+  }
+    loadPlayers();
+  },[]);
 
   useEffect(() => {
     const direction = JSON.parse(localStorage.getItem('direction'));
@@ -22,10 +34,13 @@ const GamePage = () => {
   const handleAcceptCombat = () => {
     setIsInCombat(true);
     const status = {
-       enemyHp: npc.Health,
-       enemyDamge: npc.Strength,
-        Hp:player.Health,
-        damage:player.Strenght,
+        enemyHp: npc.Health,
+        enemyDamge: npc.Strength,
+        Hp:playerUpdate.Health,
+        damage:playerUpdate.Strenght,
+        EnemyId: npc.Id,
+        MeId: playerUpdate.Id,
+        exp: playerUpdate.Exp
     }
   
    
@@ -41,11 +56,12 @@ const GamePage = () => {
     <div>
       <h2>Параметры персонажа:</h2>
       <ul>
-        <li>Имя: {player.Name}</li>
-        <li>Здоровье: {player.Health}</li>
-        <li>Сила: {player.Strenght}</li>
-        <li>Уровень: {player.Lvl}</li>
-        <li>HP: {player.Hp}</li>
+        <li>Имя: {playerUpdate?.Name}</li>
+        <li>Здоровье: {playerUpdate?.Health}</li>
+        <li>Сила: {playerUpdate?.Strenght}</li>
+        <li>Уровень: {playerUpdate?.Lvl}</li>
+        <li>HP: {playerUpdate?.Hp}</li>
+        <li>Exp: {playerUpdate?.Exp}/100</li>
       </ul>
       {location ? (
         <div>

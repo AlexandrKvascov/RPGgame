@@ -12,9 +12,8 @@ const getPlayer = async (name) => {
         'Content-Type': 'application/json',
       },
     });
-    const player = await response.json();
-    console.log(player)
-    return player;
+    
+   
   };
 const setMove = async(move)=>{
     const url = new URL("http://localhost:8080/move")
@@ -65,6 +64,41 @@ const setStartBattle = async (status) => {
     console.log(11)
     console.log(result)
     return result;
+
   };
 
-export  { getPlayer, setMove, setNpc, setStartBattle};
+const SetExp = async (status1, status2, exp) =>{
+  const url = new URL("http://localhost:8080/newLvl")
+  const data = { EnemyId: parseInt(status1), ExpNewLvl: parseInt(status2), MeExp: parseInt(exp)}
+  console.log(status2)
+  console.log(data)
+  const response  = await fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data), // преобразуем объект в строку JSON и передаем в теле запроса
+})
+
+const result = response.json()
+console.log(result)
+return result
+
+}
+const initPlayer = async ()=>{
+  const url = new URL("http://localhost:8080/initPlayer")
+ 
+  const response = await fetch(url, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+const result = await response.json()
+console.log(result)
+return result
+}
+
+export  { getPlayer, setMove, setNpc, setStartBattle, SetExp, initPlayer};

@@ -14,6 +14,7 @@ type Player struct {
 	Strenght int
 	Lvl      int
 	Hp       int
+	Exp      int
 }
 
 func (p *Player) NewName() string {

@@ -7,9 +7,9 @@ const StartPage = () => {
   const navigate = useNavigate();
 
   const handleStart = async () => {
-    const player = await getPlayer(name);
-
-    localStorage.setItem('player', JSON.stringify(player));
+    await getPlayer(name);
+    // console.log(player)
+    // localStorage.setItem('player', JSON.stringify(player));
     navigate('/game'); // Переход на страницу GamePage
   };
 
