@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { SetExp, setStartBattle } from "./api.js";
+import { SetExp, setStartBattle, lifeMin } from "./api.js";
 import { EnemyPunch, PlayerPunch } from "./AnimationPuch.js";
-
+import Cube from './Cube.js';
 import KnightImage from "./image/KnightState.gif"
 import OgreImage from "./image/OgreState.gif"
 import './styles/BattlePage.css'
@@ -15,10 +15,11 @@ const BattlePage = () => {
   const [enemyDamage, setEnemyDamage] = useState(location.state.enemyDamge);
   const [showPlayerPunch, setShowPlayerPunch] = useState(false);
   const [showEnemyPunch, setShowEnemyPunch] = useState(false);
+  const [battleResult, setBattleResult] = useState(null);
 
   const startBattle = async () => {
     const response = await setStartBattle("battle");
-    const battleResult = response;
+    setBattleResult(response);
  
     let Myhp = hp;
     let enemyhp = enemyHp;
@@ -42,7 +43,9 @@ const BattlePage = () => {
       const lvl = await SetExp(location.state.EnemyId, location.state.MeId, location.state.exp, playerId)
       localStorage.getItem("direction", JSON.stringify(lvl))
     } else if (Myhp <= 0) {
+      const playerId = JSON.parse(localStorage.getItem('playerId'))
       await setStartBattle("lose");
+      await lifeMin(playerId)
     }
   };
 
@@ -79,7 +82,11 @@ const BattlePage = () => {
           Назад
         </button>
       ) : (
-        <button onClick={startBattle}>Продолжить битву</button>
+        <div>
+
+          <Cube number ={battleResult}/>
+          <button onClick={startBattle}>Продолжить битву</button>
+        </div>
       )}
       </div>
     </div>

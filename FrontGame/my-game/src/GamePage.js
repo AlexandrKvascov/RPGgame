@@ -22,6 +22,9 @@ const GamePage = () => {
     const playerUpdate = await initPlayer(playerId);
     setPlayerUpdate(playerUpdate);
     localStorage.setItem('player', JSON.stringify(playerUpdate));
+    if (playerUpdate.Hp <= 0){
+      navigate('/game-over');
+    }
   }
     loadPlayers();
   },[]);

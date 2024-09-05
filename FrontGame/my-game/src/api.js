@@ -128,8 +128,24 @@ const SetExp = async (status1, status2, exp, playerId) =>{
 
 const result = response.json()
 return result
+}
+const lifeMin = async (playerId) =>{
+  const url = new URL("http://localhost:8080/lifeMin")
+ url.searchParams.set("player", playerId)
+  const response  = await fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+        'Content-Type': 'application/json',
+    }
+    // преобразуем объект в строку JSON и передаем в теле запроса
+})
+
 
 }
+
+
+
 const initPlayer = async (playerId)=>{
   const url = new URL("http://localhost:8080/initPlayer")
   url.searchParams.set('player', playerId)
@@ -145,4 +161,17 @@ const result = await response.json()
 return result
 }
 
-export  { getPlayer, setMove, setNpc, setStartBattle, SetExp, initPlayer, loginPlayer, registerPlayer, loadPlayer };
+ const reLife = async (playerId) => {
+  const url = new URL("http://localhost:8080/relife")
+  url.searchParams.set('player', playerId)
+  const response = await fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+
+ }
+export  { getPlayer, setMove, setNpc, setStartBattle, SetExp, initPlayer, loginPlayer, registerPlayer, loadPlayer, lifeMin, reLife };

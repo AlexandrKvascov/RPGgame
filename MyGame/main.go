@@ -79,6 +79,8 @@ func main() {
 	go g.HandleBattle(&collection)
 	go g.newLvlPlayer(&collection)
 	go g.HandleLoadPlayer(&collection)
+	go g.HandlerLifeMin(&collection)
+	go g.HandleRelif(&collection)
 
 	fmt.Println("Сервер запущен на порту 8080")
 	err = http.ListenAndServe(":8080", corsMiddleware(http.DefaultServeMux))
@@ -213,7 +215,7 @@ func (g *myGame) HandleBattle(collection *mongo.Collection) {
 			return
 		}
 		if data.Coin == "battle" {
-			num := rand.Intn(20) + 1
+			num := rand.Intn(35) + 1
 
 			w.Header().Set("Content-Type", "application/json")
 			if err := json.NewEncoder(w).Encode(num); err != nil {
@@ -271,5 +273,33 @@ func (g *myGame) initPlayer(collection *mongo.Collection) {
 
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(PlayerStatus)
+	})
+}
+
+func (g *myGame) HandlerLifeMin(collection *mongo.Collection) {
+	http.HandleFunc("/lifeMin", func(w http.ResponseWriter, r *http.Request) {
+		player := r.URL.Query().Get("player")
+		playerId, err := strconv.Atoi(player)
+		if err != nil {
+			fmt.Println(err)
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		migrations.UpdateLifeMin(collection, playerId)
+
+	})
+}
+
+func (g *myGame) HandleRelif(collection *mongo.Collection) {
+	http.HandleFunc("/relife", func(w http.ResponseWriter, r *http.Request) {
+		player := r.URL.Query().Get("player")
+		playerId, err := strconv.Atoi(player)
+		if err != nil {
+			fmt.Println(err)
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		migrations.UpdateRelif(collection, playerId)
+
 	})
 }

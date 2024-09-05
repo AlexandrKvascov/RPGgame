@@ -141,3 +141,37 @@ func ReadNpcCollect(collection *mongo.Collection, id int) (string, error) {
 	}
 	return PlayerStatus.CollectionName, nil
 }
+
+func UpdateLifeMin(collection *mongo.Collection, id int) {
+	filter := bson.M{"id": id}
+	var playerStatus player.Player
+	err := collection.FindOne(context.Background(), filter).Decode(&playerStatus)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	update := bson.M{"$set": bson.M{"hp": playerStatus.Hp - 1}}
+	_, err = collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		fmt.Println(err)
+
+	}
+
+}
+
+func UpdateRelif(collection *mongo.Collection, id int) {
+	filter := bson.M{"id": id}
+	var playerStatus player.Player
+	npcs, err := CreateNpc()
+
+	err = collection.FindOne(context.Background(), filter).Decode(&playerStatus)
+	if err != nil {
+		fmt.Println(err)
+	}
+	update := bson.M{"$set": bson.M{"health": 30, "strenght": 10, "lvl": 1, "hp": 3, "exp": 0, "npc": npcs}}
+	_, err = collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		fmt.Println(err)
+
+	}
+}

@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.49ad986d.css",
+    "main.js": "/static/js/main.037e8f22.js",
+    "static/js/453.2d3a34cf.chunk.js": "/static/js/453.2d3a34cf.chunk.js",
+    "static/media/BackGround.gif": "/static/media/BackGround.21366741aac39e36dd12.gif",
+    "static/media/BackGame.jpg": "/static/media/BackGame.710ab3b5afcd1697e6cc.jpg",
+    "static/media/KnightTakeDamage.gif": "/static/media/KnightTakeDamage.0ded7855874fab8a737c.gif",
+    "static/media/OgreState.gif": "/static/media/OgreState.bbe60271257745dc1941.gif",
+    "static/media/OgreTakeDamage.gif": "/static/media/OgreTakeDamage.6c50a61abdf53e678ee0.gif",
+    "static/media/OgreSetDamage.gif": "/static/media/OgreSetDamage.f88a67e724d4aba6569b.gif",
+    "static/media/KnightFight.gif": "/static/media/KnightFight.d128cf145f4237a7a698.gif",
+    "index.html": "/index.html",
+    "main.49ad986d.css.map": "/static/css/main.49ad986d.css.map",
+    "main.037e8f22.js.map": "/static/js/main.037e8f22.js.map",
+    "453.2d3a34cf.chunk.js.map": "/static/js/453.2d3a34cf.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.49ad986d.css",
+    "static/js/main.037e8f22.js"
+  ]
+}

@@ -1,0 +1,101 @@
+
+.cube {
+    width: 100px;
+    height: 100px;
+    background-color: #333;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+  }
+
+.cube-face {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    text-align: center;
+    line-height: 100px;
+    font-size: 36px;
+    transform: rotateY(0deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(1) {
+    transform: rotateY(0deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(2) {
+    transform: rotateY(18deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(3) {
+    transform: rotateY(36deg) translateZ(50px);
+  }
+  
+  /* ... и так далее для всех 20 граней */
+  
+  .cube-face:nth-child(4) {
+    transform: rotateY(54deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(5) {
+    transform: rotateY(72deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(6) {
+    transform: rotateY(90deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(7) {
+    transform: rotateY(108deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(8) {
+    transform: rotateY(126deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(9) {
+    transform: rotateY(144deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(10) {
+    transform: rotateY(162deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(11) {
+    transform: rotateY(180deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(12) {
+    transform: rotateY(198deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(13) {
+    transform: rotateY(216deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(14) {
+    transform: rotateY(234deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(15) {
+    transform: rotateY(252deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(16) {
+    transform: rotateY(270deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(17) {
+    transform: rotateY(288deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(18) {
+    transform: rotateY(306deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(19) {
+    transform: rotateY(324deg) translateZ(50px);
+  }
+  
+  .cube-face:nth-child(20) {
+    transform: rotateY(342deg) translateZ(50px);
+  }
