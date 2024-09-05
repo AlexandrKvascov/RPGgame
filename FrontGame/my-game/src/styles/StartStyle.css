@@ -1,0 +1,209 @@
+
+
+body .StartPage {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background-color: #1c1c1c; /* Очень темный фон */
+  background-image: url('../image/BackGround.gif'); /* Убедись, что изображение доступно */
+  background-size: cover;
+  background-position: center;
+  border: 10px solid #0a0909;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8); /* Глубокая тень */
+  }
+
+  .StartButton {
+background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    margin: 10px;
+    width: 300px;
+    height: 50px;
+    border: 2px solid #666;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    text-shadow: 1px 1px 5px #000;
+    font-size: 100%;
+
+}
+.StartButton:hover {
+
+  background-color: #555;
+  border-color: #888;
+}
+
+
+
+.NameInpGroup{
+    position:relative;
+    margin-top: 20px;
+    font-family: 'Alegreya Sans SC', sans-serif;
+}
+.NameInpGroup label {
+    padding:0 15px;
+    /* background-color:#131313; */
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-100%);
+    text-transform: capitalize;
+    pointer-events: none;
+    font-size:20px;
+    transition: all 0.3s;
+  }
+
+  .NameInpGroup input {
+    padding:18px 0px;
+    width:300px;
+    border: 3px solid #0c0c0c;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+    font-family:inherit;
+    background-color: black;
+    border-radius:10px;
+  }
+
+
+  .NameInpGroup input:focus {
+    border-color: #fff;
+    background-color: #fff;
+    color: #0a0a0a;
+
+  }
+  .NameInpGroup input:hover {
+    border: 3px solid #fff;
+    color: #050505;
+   background-color: #fff;
+  }
+  .NameInpGroup input:hover + label,
+.NameInpGroup input:not(:placeholder-shown) + label {
+  top:0;
+  font-size:16px;
+  background-color: #0a0909;
+  border-radius:10px;
+
+}
+  .NameInpGroup input:focus + label,
+.NameInpGroup input:not(:placeholder-shown) + label {
+  top:0;
+  font-size:16px;
+}
+
+.InputPerson {
+    display: inline-block;
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #0f0f0f;
+    border-radius: 10px;
+    background-color: black;
+    cursor: pointer;
+  }
+  
+  .InputPerson:checked {
+    background-color: #fff;
+    border: 3px solid #fff;
+  }
+  
+  .InputPerson:hover {
+    border: 3px solid #fff;
+  }
+
+
+.loadPerson ul{
+    list-style-type: none ;
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+
+}
+.loadPerson li {
+    border-radius: 5px;
+    padding: 5px;
+    font-weight: bold;
+    background-color: #050505;
+    color: #fff;
+    margin: 5px;
+    display: flex;
+    justify-content: left;
+    /* flex-direction: column; */
+}
+.InputPerson {
+    width: 38px;
+    border-radius: 11px;
+}
+.InputPerson::after{
+    left: 2px;
+    top: 2px;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    background: var(--ab, var(--border));
+    transform: translateX(var(--x, 0));
+}
+.InputPerson:checked{
+    --ab: var(--active-inner);
+    --x: 17px;
+}
+.InputPerson:disabled:not(:checked)::after{
+    opacity: .6;
+}
+
+@supports(-webkit-appearance: none) or (-moz-appearance: none) {
+  input[type='checkbox'],
+  input[type='radio'] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #131313; /* Темный фон */
+    border: 2px solid #5a5a5a; /* Серые края */
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+}
+
+/* При выборе — добавить мистический эффект */
+input[type='checkbox']:checked,
+input[type='radio']:checked {
+background-color: #521f2b; /* Темно-красный (зловещий) оттенок при выборе */
+border-color: #b1001e;
+box-shadow: 0 0 10px rgba(177, 0, 30, 0.7); /* Эффект свечения */
+}
+
+/* Hover эффект с легким свечением */
+input[type='checkbox']:not(:checked):not(:disabled):hover,
+input[type='radio']:not(:checked):not(:disabled):hover {
+border-color: #b1001e; /* Ярче при наведении */
+box-shadow: 0 0 8px rgba(177, 0, 30, 0.4);
+}
+
+/* При фокусе добавляем мистическое свечение */
+input[type='checkbox']:focus,
+input[type='radio']:focus {
+box-shadow: 0 0 12px rgba(177, 0, 30, 0.8);
+}
+
+/* Специальная обработка для всех чекбоксов и радиокнопок */
+input[type='checkbox'],
+input[type='radio'] {
+--focus: 2px rgba(177, 0, 30, .6); /* Изменение цвета свечения */
+outline: none;
+transition: box-shadow 0.2s, background-color 0.2s;
+}
+
+/* Для отключенных элементов */
+input[type='checkbox']:disabled,
+input[type='radio']:disabled {
+background-color: #2e2e2e; /* Блеклый фон для отключенных */
+border-color: #5a5a5a;
+cursor: not-allowed;
+}

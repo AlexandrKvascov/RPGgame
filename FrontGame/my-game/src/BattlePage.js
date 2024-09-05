@@ -3,6 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { SetExp, setStartBattle } from "./api.js";
 import { EnemyPunch, PlayerPunch } from "./AnimationPuch.js";
 
+import KnightImage from "./image/KnightState.gif"
+import OgreImage from "./image/OgreState.gif"
+import './styles/BattlePage.css'
 const BattlePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -35,8 +38,8 @@ const BattlePage = () => {
 
     if (enemyhp <= 0) {
       await setStartBattle("win");
-      console.log(location.state.exp)
-      const lvl = await SetExp(location.state.EnemyId, location.state.MeId, location.state.exp)
+      const playerId = JSON.parse(localStorage.getItem('playerId'))
+      const lvl = await SetExp(location.state.EnemyId, location.state.MeId, location.state.exp, playerId)
       localStorage.getItem("direction", JSON.stringify(lvl))
     } else if (Myhp <= 0) {
       await setStartBattle("lose");
@@ -44,12 +47,32 @@ const BattlePage = () => {
   };
 
   return (
+    <body className="BattlePage">
+
     <div>
       <h2>Battle Page</h2>
+      <div className="BattleStats">
       <p>Player HP: {hp}</p>
+      <div className="hp-bar">
+      <div className="hp-bar-fill" style={{ width: `${(hp / 100) * 100}%` }}></div>
+      </div>
+      
       <p>Enemy HP: {enemyHp}</p>
+      <div className="hp-bar">
+      <div className="hp-bar-fill" style={{ width: `${(enemyHp / 100) * 100}%` }}></div>
+      </div>
+      </div>
+      <div className="BattleImages">
+
       <p>Battle State: </p>
+      {!showPlayerPunch &&!showEnemyPunch && (
+        <div>
+        <img src={KnightImage} alt="Knight" />
+      <img src={OgreImage}  />
+      </div>
+        )}
       {showPlayerPunch && <PlayerPunch />}
+    
       {showEnemyPunch && <EnemyPunch />}
       {hp <= 0 || enemyHp <= 0 ? (
         <button onClick={() => navigate("/game", { replace: true })}>
@@ -58,7 +81,9 @@ const BattlePage = () => {
       ) : (
         <button onClick={startBattle}>Продолжить битву</button>
       )}
+      </div>
     </div>
+    </body>
   );
 };
 

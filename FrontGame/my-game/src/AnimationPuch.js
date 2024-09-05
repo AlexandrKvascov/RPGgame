@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from "./styles.module.css";
+import KnightGet from "./image/KnightFight.gif"
+import EnemyTake from "./image/OgreTakeDamage.gif"
+import KnightTake from"./image/KnightTakeDamage.gif"
+import EnemeyGet from "./image/OgreSetDamage.gif"
 
 function PlayerPunch  ()  {
   const [heroAnimation, setHeroAnimation] = useState(false);
@@ -8,20 +12,23 @@ function PlayerPunch  ()  {
     setHeroAnimation(true);
     setTimeout(() => {
       setHeroAnimation(false);
-    }, 1000);
+    }, 1000000);
   }, []);
 
   return (
     <div
       className={`hero ${heroAnimation ? 'animate' : ''}`}
       style={{
-        backgroundImage: 'linear-gradient(to bottom, #ffffff, #cccccc)',
-        backgroundSize: '100% 300px',
+       
+       
         backgroundPosition: '0% 100%',
         transition: 'background-position 1s ease-in-out',
       }}
     >
-      {/* Рыцарь */}
+      
+      <img src={KnightGet} alt="Knight"/>
+      <img src={EnemyTake}/>
+      
     </div>
   );
 }
@@ -40,13 +47,15 @@ function EnemyPunch () {
     <div
       className={`enemy ${enemyAnimation ? 'animate' : ''}`}
       style={{
-        backgroundImage: 'linear-gradient(to bottom, #ff9900, #ff0000)',
-        backgroundSize: '100% 300px',
+
+       
         backgroundPosition: '0% 100%',
         transition: 'background-position 1s ease-in-out',
       }}
     >
       {/* Враг, выглядит как огонь */}
+      <img src={KnightTake} alt="Knight"/>
+      <img src={EnemeyGet}/>
     </div>
   );
 }

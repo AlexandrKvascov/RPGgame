@@ -1,11 +1,19 @@
 import {setMove} from "./api.js"
 import { setNpc } from './api.js';
+import { useNavigate } from 'react-router-dom';
+
 const ButtonMove =({setLocation})=>{
+ 
+    const navigate = useNavigate();
     const handleClick = async(move)=>{
-        console.log(move)
+        const playerId = JSON.parse(localStorage.getItem('playerId'))
+        const npc = await setNpc(playerId)
+        if (npc == null){
+            navigate("/win")
+        }
         const direction = await setMove(move)
         localStorage.getItem("direction", JSON.stringify(direction))
-        const npc = await setNpc()
+    
         
         localStorage.setItem("npc", JSON.stringify(npc))
         setLocation(direction)

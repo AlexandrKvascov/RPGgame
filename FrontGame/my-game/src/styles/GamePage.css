@@ -1,0 +1,124 @@
+
+#root {
+    color: #000;
+    background-color: #000;
+}
+body.GamePage {
+    min-height: 100vh;
+    margin: 0;
+    background: url('../image/BackGame.jpg') no-repeat center center fixed;
+    background-size:cover;
+    color: #292929;
+    font-family: 'Cinzel', serif; /* Можно использовать готический шрифт */
+    background-color: #222;
+  }
+
+
+
+  ul.StatusPlayer {
+    list-style-type: none ;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border: 2px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #222;
+  }
+  
+ul.StatusPlayer li {
+    margin: 10px 0;
+    font-size: 18px;
+  }
+
+  img {
+    margin-top: 20px;
+    width: 150px;
+    height: auto;
+    border: 3px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #333;
+  }
+  button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    margin: 10px;
+    border: 2px solid #666;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    text-shadow: 1px 1px 5px #000;
+  }
+  
+  button:hover {
+    background-color: #555;
+    border-color: #888;
+  }
+  .Health {
+    color: #ff4040;
+  }
+  
+  .Exp {
+    color: #ffd700;
+  }
+  button:active {
+    background-color: #222;
+    box-shadow: inset 0 0 5px #000;
+  }
+
+.Exp{
+    color: gold;
+}
+.Health{
+    color: crimson;
+}
+
+div {
+    padding: 20px;
+  }
+
+.Personh2 {
+    color: #d4af37;
+    text-shadow: 2px 2px 10px #000000;
+  }
+  
+  p {
+    color: #ccc;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #222;
+  }
+  
+  li {
+    color: #ccc;
+    padding: 5px;
+  }
+  
+  li::before {
+    content: "⚔️ ";
+    color: #d4af37;
+  }
+  div.StatusContainer {
+    border: 2px solid #444;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 0 20px #222;
+    max-width: 400px;
+    margin: 20px auto;
+  }
+  
+  div.CharacterInfo, div.NPCInfo {
+    margin: 10px 0;
+  }
+
+  .NpcInfo{
+    background: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border: 2px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #222;
+  }
+  li {
+    list-style-type: none ;
+  }
