@@ -72,23 +72,35 @@ func UpdateLvlPlayer(collection *mongo.Collection, EnemyId, ExpNewLvl, MeExp int
 			npcRes = append(npcRes, npc)
 		}
 	}
-
+	var lvlExp [10]int = [10]int{0, 11, 26, 46, 71, 101, 136, 176, 221, 271}
 	collection.FindOne(context.Background(), filter).Decode(&PlayerStatus)
 	if len(npcRes) > 0 {
 
 		Exp := (npcRes[0].Lvl*npcRes[0].Strength)/(PlayerStatus.Lvl+1) + MeExp
-		if Exp >= 100 {
-			lvlNew := PlayerStatus.Lvl + (Exp / 100)
-			Exp = Exp % 100
-			filter = bson.M{"id": ExpNewLvl}
-			update := bson.M{"$set": bson.M{"exp": Exp, "lvl": lvlNew, "strenght": PlayerStatus.Strenght + 10, "health": PlayerStatus.Health + 10}}
-			_, err := collection.UpdateOne(context.Background(), filter, update)
-			if err != nil {
-				fmt.Println(err)
+		var lvlNew int
+		if PlayerStatus.Lvl != 10 {
+			for id, exp := range lvlExp {
+				if Exp <= exp {
+					lvlNew = id
+					break
+
+				} else {
+					lvlNew = 10
+					break
+				}
 			}
-		} else {
-			filter = bson.M{"id": ExpNewLvl}
-			update := bson.M{"$set": bson.M{"exp": Exp}}
+			var health int
+			var strenght int
+			filter := bson.M{"id": ExpNewLvl}
+			if PlayerStatus.Lvl != lvlNew {
+				state := lvlNew - PlayerStatus.Lvl
+				strenght = PlayerStatus.Strenght + 10*state
+				health = PlayerStatus.Health + 10*state
+			} else {
+				strenght = PlayerStatus.Strenght
+				health = PlayerStatus.Health
+			}
+			update := bson.M{"$set": bson.M{"exp": Exp, "lvl": lvlNew, "strenght": strenght, "health": health}}
 			_, err := collection.UpdateOne(context.Background(), filter, update)
 			if err != nil {
 				fmt.Println(err)

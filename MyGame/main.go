@@ -215,7 +215,7 @@ func (g *myGame) HandleBattle(collection *mongo.Collection) {
 			return
 		}
 		if data.Coin == "battle" {
-			num := rand.Intn(35) + 1
+			num := rand.Intn(95) + 1
 
 			w.Header().Set("Content-Type", "application/json")
 			if err := json.NewEncoder(w).Encode(num); err != nil {

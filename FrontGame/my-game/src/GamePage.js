@@ -52,11 +52,23 @@ const GamePage = () => {
    
     navigate('/battle', {state: status})
   };
-
+  const percent = [10,15,20,25,30,35,40,45,50,51]
+    
+  const minPrecent = [0, 11, 26, 46, 71, 101, 136, 176, 221, 271]
   const handleDeclineCombat = () => {
     setLocation(null);
     setIsInCombat(false);
   };
+  const HandlePrecentLvl = (exp, lvl)=>{
+    if(lvl === 10){
+      return "MAX"
+    }
+    let x =exp - minPrecent[lvl-1]
+    let intLvl = parseInt(lvl)
+    let y = percent[intLvl-1]
+    let answer = (x*100)/y
+    return answer.toFixed(2)
+  }
 
   return (
     <body className='GamePage'>
@@ -70,7 +82,7 @@ const GamePage = () => {
         <li>Сила: {playerUpdate?.Strenght}</li>
         <li>Уровень: {playerUpdate?.Lvl}</li>
         <li>HP: {playerUpdate?.Hp}</li>
-        <li className='Exp'>Exp: {playerUpdate?.Exp}/100</li>
+        <li className='Exp'>Exp: {HandlePrecentLvl(playerUpdate?.Exp, playerUpdate?.Lvl)}/100</li>
       </ul>
       </div>
       <div>
